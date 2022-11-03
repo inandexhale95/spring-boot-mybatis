@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>퀴즈 정답 Check</title>
+</head>
+<body>
+
+  <h1 th:if="${answer}" th:text="${answer}"></h1>
+
+<a th:href="@{/quiz/play}">리플레이</a>
+<a th:href="@{/quiz}">메인홈</a>
+
+</body>
+</html>

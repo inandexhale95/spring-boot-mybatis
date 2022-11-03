@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h3 th:if="${complete}" th:text="${complete}"></h3>
+
+    <div>
+        <h4 th:if="${title}" th:text="${title}"></h4>
+        <form th:action="${quizForm.newQuiz} ? @{/quiz/insert} : @{/quiz/update}" th:object="${quizForm}" method="post">
+            <label>질문</label><br>
+            <input type="text" name="question" th:field="*{question}">
+            <div th:if="${#fields.hasErrors('question')}" th:errors="*{question}" style="color: red"></div>
+            <br>
+
+            <label>정답</label><br>
+            <div>
+                <input type="radio" name="answer" value="true" th:field="*{answer}"> O
+                <input type="radio" name="answer" value="false" th:field="*{answer}"> X
+            </div>
+            <div th:if="${#fields.hasErrors('answer')}" th:errors="*{answer}" style="color: red"></div>
+
+            <label>작성자</label><br>
+            <input type="text" name="author" th:field="*{author}">
+            <div th:if="${#fields.hasErrors('author')}" th:errors="*{author}" style="color: red"></div>
+
+
+            <br>
+            <input type="hidden" name="id" th:value="*{id}">
+            <input type="submit" value="전송">
+        </form>
+    </div>
+
+    <hr>
+    <br>
+    <h2><a th:href="@{/quiz/play}">퀴즈하기!</a></h2>
+    <br>
+    <hr>
+
+    <div th:if="${quizList}">
+        <table border="1" style="margin-left: 10px">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>질문</td>
+                    <td>정답</td>
+                    <td>작성자</td>
+                    <td>변경</td>
+                    <td>삭제</td>
+                </tr>
+            </thead>
+            <tbody th:each="quiz : ${quizList}" th:object="${quiz}">
+                <tr>
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{question}"></td>
+                    <td th:text="*{answer}"></td>
+                    <td th:text="*{author}"></td>
+                    <td><a th:href="@{/quiz/{id}(id=${quiz.id})}">변경</a></td>
+                    <td>
+                        <form th:action="@{/quiz/delete}" method="post">
+                            <input type="hidden" name="id" th:value="*{id}">
+                            <button>삭제</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

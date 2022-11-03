@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>퀴즈 게임 Play</title>
+</head>
+<body>
+  <h1>퀴즈 게임 Play</h1>
+
+  <div th:if="${quiz}" th:object="${quiz}">
+      <h3 th:text="*{question}"></h3>
+      <form th:action="@{/quiz/check}" method="post">
+          <input type="radio" name="answer" value="true"> O
+          <input type="radio" name="answer" value="false"> X
+
+          <br>
+          <br>
+          <input type="submit" value="전송">
+      </form>
+  </div>
+
+<div th:unless="${quiz}">
+    <h3>등록된 퀴즈가 없습니다.</h3>
+</div>
+
+</body>
+</html>
